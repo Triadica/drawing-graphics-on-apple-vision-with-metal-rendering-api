@@ -70,7 +70,7 @@ Compositor Services 是一个 visionOS 平台特有的 API，它将你的 SwiftU
 ```swift
 struct ContentStageConfiguration: CompositorLayerConfiguration {
   func makeConfiguration(capabilities: LayerRenderer.Capabilities, configuration: inout LayerRenderer.Configuration) {
-      // Specify the formats for both the color and depth output textures that Apple Vision will create for us.
+      // 明确指定 Apple Vision 将为我们创建的颜色和深度输出纹理的格式
       configuration.depthFormat = .depth32Float
       configuration.colorFormat = .bgra8Unorm_srgb
 
@@ -100,7 +100,7 @@ struct MyApp: App {
 
 接下来我们需要设置的是是否在 `LayerRenderer` 中启用对**注视点渲染（foveation）**的支持。注视点渲染允许我们以更高的分辨率渲染眼睛直接注视的内容，并以较低的分辨率渲染其他所有内容。这在 VR 中非常有用，因为它能提高性能。
 
-Apple Vision 为我们自动处理眼动追踪和注视点 (实际上，由于安全考虑，开发者**完全**无法访问用户的注视点)。我们需要设置我们的 `LayerRenderer` 以支持它，然后我们将在渲染过程中“免费”获得它。当我们渲染到 `LayerRenderer` 纹理时，Apple Vision 会自动调整分辨率，使其在我们直接注视的纹理区域更高。 这是先前配置 `LayerRenderer` 的代码，已更新以支持注视点：
+Apple Vision 为我们自动处理眼动追踪和注视点 (实际上，由于安全考虑，开发者**完全**无法访问用户的注视点)。我们需要设置我们的 `LayerRenderer` 以支持它，然后我们将在渲染过程中“自动”获得它。当我们渲染到 `LayerRenderer` 纹理时，Apple Vision 会自动调整分辨率，使其在我们直接注视的纹理区域更高。 这是先前配置 `LayerRenderer` 的代码，已更新以支持注视点：
 
 ```swift
 func makeConfiguration(capabilities: LayerRenderer.Capabilities, configuration: inout LayerRenderer.Configuration) {
